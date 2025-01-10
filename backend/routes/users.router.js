@@ -13,7 +13,7 @@ const connection = db({
 
 router.get("/", async (req, res) => {
   try {
-    const result = await connection.any("SELECT * FROM users;");
+    const result = await connection.any("SELECT * FROM usuarios;");
     console.log("Usuarios de la base de datos:", result);
     res.send(result);
   } catch (error) {
@@ -26,7 +26,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await connection.any("SELECT * FROM users WHERE id = $1;", [
+    const result = await connection.any("SELECT * FROM usuarios WHERE id = $1;", [
       id,
     ]);
     console.log("Usuario de la base de datos:", result);
@@ -42,7 +42,7 @@ router.get("/:id/fligths", async (req, res) => {
   try {
     const { id } = req.params;
     const result = await connection.any(
-      "SELECT * FROM fligths WHERE user_id = $1;",
+      "SELECT * FROM vuelos WHERE user_id = $1;",
       [id]
     );
     console.log("Vuelos del usuario de la base de datos:", result);
@@ -56,6 +56,32 @@ router.get("/:id/fligths", async (req, res) => {
       .status(500)
       .send("Error al obtener los vuelos del usuario de la base de datos.");
   }
+});
+
+router.post("/", async (req, res) => {
+    const body = req.body;
+    res.json({
+        message: "Usuario creado",
+        body,
+    });
+});
+
+router.patch("/:id", async (req, res) => {
+    const { id } = req.params;
+    const body = req.body;
+    res.json({
+        message: "Usuario actualizado",
+        id,
+        body,
+    });
+});
+
+router.delete("/:id", async (req, res) => {
+    const { id } = req.params;
+    res.json({
+        message: "Usuario eliminado",
+        id,
+    });
 });
 
 module.exports = router;

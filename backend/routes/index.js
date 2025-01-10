@@ -1,9 +1,12 @@
 const usersRouter = require("./users.router");
 const fligthsRouter = require("./fligths.router");
+const express = require("express");
 
 function routerApi(app) {
-  app.use("/users", usersRouter);
-  app.use("/fligths", fligthsRouter);
+  const router = express.Router();
+  app.use("/api/v1", router);
+  router.use("/users", usersRouter);
+  router.use("/fligths", fligthsRouter);
 }
 
 module.exports = routerApi;

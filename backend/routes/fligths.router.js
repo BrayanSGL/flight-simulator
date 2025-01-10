@@ -11,14 +11,10 @@ const connection = db({
   password: "postgres_admin",
 });
 
-//End point para filtar por medio de query los vielos con x estado
+//End point para obtener los vuelos
 router.get("/", async (req, res) => {
   try {
-    const { status } = req.query;
-    const result = await connection.any(
-      "SELECT * FROM fligths WHERE status = $1;",
-      [status]
-    );
+    const result = await connection.any("SELECT * FROM vuelos;");
     console.log("Vuelos de la base de datos:", result);
     res.send(result);
   } catch (error) {
