@@ -1,4 +1,5 @@
 const express = require("express");
+const routerApi = require("./routes"); 
 const db = require("pg-promise")();
 const app = express();
 const port = 3000;
@@ -35,6 +36,8 @@ app.get("/tables", async (req, res) => {
     res.status(500).send("Error al obtener las tablas de la base de datos.");
   }
 });
+
+routerApi(app);
 
 app.listen(port, () => {
   console.log(`Escuchando en http://localhost:${port}`);
