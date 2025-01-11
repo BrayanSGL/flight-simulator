@@ -1,5 +1,7 @@
 const express = require("express");
 const routerApi = require("./routes");
+const {logErrors, errorHandler, boomErrorHandler} = require("./middlewares/error.handler")
+
 const db = require("pg-promise")();
 
 const app = express();
@@ -46,6 +48,10 @@ app.get("/tables", async (req, res) => {
 });
 
 routerApi(app);
+
+app.use(logErrors);
+app.use(boomErrorHandler);
+app.use(errorHandler);
 
 app.listen(port, () => {
   console.log(`Escuchando en http://localhost:${port}`);

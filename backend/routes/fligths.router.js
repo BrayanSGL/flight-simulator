@@ -21,12 +21,16 @@ router.get("/", async (req, res) => {
 });
 
 //End point para obtener un vuelo por su id
-router.get("/:id", async (req, res) => {
-    const { id } = req.params;
-    console.log(id);
-    const fligth = fligthsService.findOne(id);
-    console.log(fligth);
-    res.json(fligth);
+router.get("/:id", async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        console.log(id);
+        const fligth = await fligthsService.findOne(id);
+        console.log(fligth);
+        res.json(fligth);
+    } catch (error) {
+        next(error);
+    }
 });
 
 

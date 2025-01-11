@@ -11,19 +11,18 @@ const connection = db({
     password: 'postgres_admin'
   });
 
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
   try {
     const result = await connection.any("SELECT * FROM usuarios;");
     console.log("Usuarios de la base de datos:", result);
     res.send(result);
   } catch (error) {
-    console.error("Error al obtener los usuarios de la base de datos:", error);
-    res.status(500).send("Error al obtener los usuarios de la base de datos.");
+    next(error);
   }
 });
 
 //endpoint para obtener un usuario por su id
-router.get("/:id", async (req, res) => {
+router.get("/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
     const result = await connection.any("SELECT * FROM usuarios WHERE id = $1;", [
@@ -32,13 +31,12 @@ router.get("/:id", async (req, res) => {
     console.log("Usuario de la base de datos:", result);
     res.send(result);
   } catch (error) {
-    console.error("Error al obtener el usuario de la base de datos:", error);
-    res.status(500).send("Error al obtener el usuario de la base de datos.");
+    next(error);
   }
 });
 
 //endpoint para obtener los vuelos de un usuario por su id
-router.get("/:id/fligths", async (req, res) => {
+router.get("/:id/fligths", async (req, res, next) => {
   try {
     const { id } = req.params;
     const result = await connection.any(
@@ -48,13 +46,7 @@ router.get("/:id/fligths", async (req, res) => {
     console.log("Vuelos del usuario de la base de datos:", result);
     res.send(result);
   } catch (error) {
-    console.error(
-      "Error al obtener los vuelos del usuario de la base de datos:",
-      error
-    );
-    res
-      .status(500)
-      .send("Error al obtener los vuelos del usuario de la base de datos.");
+    next(error);
   }
 });
 

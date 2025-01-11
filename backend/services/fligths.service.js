@@ -1,4 +1,5 @@
 const db = require("pg-promise")();
+const boom = require("@hapi/boom");
 
 class FligthsService {
   constructor() {
@@ -31,10 +32,12 @@ class FligthsService {
 
   async findOne(id, req, res) {
     const fligth = this.fligths.find((fligth) => fligth.id === Number(id));
+    if (!fligth) {
+      throw boom.notFound("Vuelo no encontrado");
+    }
     console.log(fligth);
     return fligth;
   }
-  
 }
 
 module.exports = FligthsService;
