@@ -1,6 +1,7 @@
 const express = require("express");
 const db = require("pg-promise")();
-
+const validatorHandler = require("../middlewares/validator.handler");
+// const { createUserSchema, updateUserSchema, getUserSchema } = require("../schemas/user.schema");
 const router = express.Router();
 
 const connection = db({
