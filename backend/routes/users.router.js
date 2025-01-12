@@ -27,41 +27,23 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-//endpoint para obtener los vuelos de un usuario por su id
-router.get("/:id/fligths", async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const userFligths = await usersService.findFligths(id);
-    res.json(userFligths);
-  } catch (error) {
-    next(error);
-  }
-});
-
 router.post("/", async (req, res) => {
     const body = req.body;
-    res.json({
-        message: "Usuario creado",
-        body,
-    });
+    const newUser = await usersService.create(body);
+    res.status(201).json(newUser);
 });
 
 router.patch("/:id", async (req, res) => {
     const { id } = req.params;
     const body = req.body;
-    res.json({
-        message: "Usuario actualizado",
-        id,
-        body,
-    });
+    const user = await usersService.update(id, body);
+    res.status(201).json(user);
 });
 
 router.delete("/:id", async (req, res) => {
     const { id } = req.params;
-    res.json({
-        message: "Usuario eliminado",
-        id,
-    });
+    await usersService.delete(id);
+    res.status(200).json({ message: "Usuario eliminado" });
 });
 
 module.exports = router;
