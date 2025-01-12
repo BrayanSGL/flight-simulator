@@ -16,7 +16,7 @@ const fligthsService = new FligthsService();
 
 //End point para obtener los vuelos
 router.get("/", async (req, res) => {
-    const fligths = await fligthsService.find(req, res);
+    const fligths = await fligthsService.find();
     res.json(fligths);
 });
 
@@ -26,7 +26,7 @@ router.get("/:id", async (req, res, next) => {
         const { id } = req.params;
         console.log(id);
         const fligth = await fligthsService.findOne(id);
-        console.log(fligth);
+        //console.log(fligth);
         res.json(fligth);
     } catch (error) {
         next(error);

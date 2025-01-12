@@ -1,22 +1,16 @@
 const express = require("express");
-const db = require("pg-promise")();
+// const db = require("pg-promise")();
+const UsersService = require("../services/users.service");
 const validatorHandler = require("../middlewares/validator.handler");
 // const { createUserSchema, updateUserSchema, getUserSchema } = require("../schemas/user.schema");
 const router = express.Router();
+const usersService = new UsersService();
 
-const connection = db({
-    host: 'localhost',
-    port: 5432,
-    database: 'postgres',
-    user: 'postgres_user',
-    password: 'postgres_admin'
-  });
 
 router.get("/", async (req, res, next) => {
   try {
-    const result = await connection.any("SELECT * FROM usuarios;");
-    console.log("Usuarios de la base de datos:", result);
-    res.send(result);
+    const users = await usersService.find();
+    res.json(users);
   } catch (error) {
     next(error);
   }
@@ -26,11 +20,8 @@ router.get("/", async (req, res, next) => {
 router.get("/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
-    const result = await connection.any("SELECT * FROM usuarios WHERE id = $1;", [
-      id,
-    ]);
-    console.log("Usuario de la base de datos:", result);
-    res.send(result);
+    const user = await usersService.findOne(id);
+    res.json(user);
   } catch (error) {
     next(error);
   }
@@ -40,12 +31,8 @@ router.get("/:id", async (req, res, next) => {
 router.get("/:id/fligths", async (req, res, next) => {
   try {
     const { id } = req.params;
-    const result = await connection.any(
-      "SELECT * FROM vuelos WHERE user_id = $1;",
-      [id]
-    );
-    console.log("Vuelos del usuario de la base de datos:", result);
-    res.send(result);
+    const userFligths = await usersService.findFligths(id);
+    res.json(userFligths);
   } catch (error) {
     next(error);
   }
