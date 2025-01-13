@@ -1,0 +1,75 @@
+/* LoginPage.css */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #0d6efd, #6610f2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .login-container {
+    position: relative;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 400px;
+    z-index: 2;
+  }
+  
+  .login-title {
+    margin: 0;
+    font-size: 2rem;
+    color: #333;
+    text-align: center;
+  }
+  
+  .login-form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .login-input {
+    padding: 12px;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .login-input:focus {
+    border-color: #0d6efd;
+    outline: none;
+  }
+  
+  .login-button {
+    padding: 12px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #0d6efd;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .login-button:hover {
+    background-color: #0b5ed7;
+  }
+  
+  .login-bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    width: 600px;
+    height: 600px;
+  }
+  
